@@ -17,6 +17,21 @@ au("VimEnter", {
       pcall(vim.api.nvim_buf_delete, dir_buf, { force = true })
     end
     vim.cmd("Neotree show")
+
+    -- The empty start buffer fills the editor area but gets no tab, and is
+    -- wiped once a file replaces it. If you start typing in it, it becomes
+    -- a regular buffer again.
+    local start = vim.api.nvim_get_current_buf()
+    vim.bo[start].buflisted = false
+    vim.bo[start].bufhidden = "wipe"
+    au("BufModifiedSet", {
+      buffer = start,
+      once = true,
+      callback = function()
+        vim.bo[start].buflisted = true
+        vim.bo[start].bufhidden = ""
+      end,
+    })
   end,
 })
 
