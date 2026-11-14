@@ -125,7 +125,10 @@ return {
         python = { "ruff_fix", "ruff_organize_imports", "ruff_format" },
         lua = { "stylua", lsp_format = "fallback" },
       },
-      format_on_save = { timeout_ms = 1000, lsp_format = "fallback" },
+      format_on_save = function(buf)
+        if vim.b[buf].autosaving then return end -- autosave writes as-is
+        return { timeout_ms = 1000, lsp_format = "fallback" }
+      end,
     },
   },
 }
