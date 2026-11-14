@@ -1,6 +1,6 @@
 # nvim-config
 
-My Neovim config with a VS Code–like layout: file tree on the left, editor with tabs and breadcrumbs in the middle, a terminal under the editor, and Claude Code on the right.
+My Neovim config with an IDE-style layout: file tree on the left, editor with tabs and breadcrumbs in the middle, a terminal under the editor, and Claude Code on the right.
 
 ## Install
 

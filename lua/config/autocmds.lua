@@ -1,7 +1,7 @@
 local au = vim.api.nvim_create_autocmd
 local group = vim.api.nvim_create_augroup("user", { clear = true })
 
--- `nvim` or `nvim .` → open the explorer sidebar, like opening a folder in VS Code
+-- `nvim` or `nvim .` → open the explorer sidebar
 au("VimEnter", {
   group = group,
   callback = function()

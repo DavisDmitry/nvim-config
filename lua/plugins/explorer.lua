@@ -50,9 +50,9 @@ return {
       hijack_netrw_behavior = "disabled", -- handled in autocmds.lua
       follow_current_file = { enabled = true },
       use_libuv_file_watcher = true, -- refresh when files change on disk
-      group_empty_dirs = true, -- "src/aiogram_screens" like in VS Code
+      group_empty_dirs = true, -- show "src/aiogram_screens" as one node
       filtered_items = {
-        visible = true, -- show hidden files dimmed, like VS Code
+        visible = true, -- show hidden files dimmed
         hide_dotfiles = false,
         hide_gitignored = false,
         never_show = { ".DS_Store", ".git" },

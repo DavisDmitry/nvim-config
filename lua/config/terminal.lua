@@ -1,4 +1,4 @@
--- Bottom terminal panel, VS Code style: it opens *under the editor only*,
+-- Bottom terminal panel: it opens *under the editor only*,
 -- not under the explorer or the Claude panel (toggleterm/snacks always span
 -- the full width, which is why this is hand-rolled).
 local M = { buf = nil, win = nil, height = 15 }

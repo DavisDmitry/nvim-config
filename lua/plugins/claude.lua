@@ -1,5 +1,5 @@
 -- Claude Code in the right panel, connected to Neovim over the same IDE
--- protocol the VS Code extension uses (sees selection, opens diffs, etc.)
+-- protocol the IDE extensions use (sees selection, opens diffs, etc.)
 
 -- `:ClaudeCode --resume` only works when Claude isn't running yet: on a live
 -- session it just toggles the panel and ignores the args. So: if a session is

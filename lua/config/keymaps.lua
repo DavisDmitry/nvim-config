@@ -48,7 +48,7 @@ map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Close tab" }
 map("n", "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Close other tabs" })
 map("n", "<leader>bp", "<cmd>BufferLinePick<cr>", { desc = "Pick tab" })
 
--- Move lines (Alt+j/k, like Alt+Up/Down in VS Code)
+-- Move lines (Alt+j/k)
 map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
 map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
 map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move selection down" })
@@ -56,7 +56,7 @@ map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move selection up" })
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
--- Terminal panel (Ctrl+` like VS Code; Ctrl+\ as a fallback that always works)
+-- Terminal panel (Ctrl+`; Ctrl+\ as a fallback that always works)
 -- <C-\> is not mapped in terminal mode: it would break the built-in <C-\><C-n>
 map({ "n", "t" }, "<C-`>", term.toggle, { desc = "Toggle terminal" })
 map("n", "<C-\\>", term.toggle, { desc = "Toggle terminal" })
