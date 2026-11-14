@@ -134,6 +134,10 @@ return {
     event = "VeryLazy",
     opts = {
       preset = "modern",
+      -- Hide the Russian-layout twins from langmapper (they still work)
+      filter = function(mapping)
+        return not (mapping.lhs or ""):find("[\208\209]") -- Cyrillic UTF-8 lead bytes
+      end,
       spec = {
         { "<leader>a", group = "Claude Code" },
         { "<leader>b", group = "Tabs" },

@@ -10,3 +10,7 @@ require("config.options")
 require("config.lazy")
 require("config.keymaps")
 require("config.autocmds")
+
+-- Russian twins for every mapping defined so far (later ones are handled
+-- automatically); see lua/plugins/langmapper.lua
+require("langmapper").automapping({ global = true, buffer = true })
