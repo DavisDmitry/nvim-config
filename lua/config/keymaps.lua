@@ -7,6 +7,17 @@ map("n", "<Esc>", "<cmd>nohlsearch<cr>")
 -- Quit everything in one go: stop terminal jobs (fish, Claude) so they don't
 -- block :qa, then quit, asking only about unsaved files.
 local function quit_all()
+  -- Stopping the job of the terminal the cursor is in (e.g. the Claude panel)
+  -- aborts the quit, so step into a regular window first.
+  if vim.bo.buftype == "terminal" then
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+      local buf = vim.api.nvim_win_get_buf(win)
+      if vim.bo[buf].buftype ~= "terminal" and vim.api.nvim_win_get_config(win).relative == "" then
+        vim.api.nvim_set_current_win(win)
+        break
+      end
+    end
+  end
   local jobs = {}
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if vim.bo[buf].buftype == "terminal" then
@@ -46,9 +57,9 @@ map("v", "<", "<gv")
 map("v", ">", ">gv")
 
 -- Terminal panel (Ctrl+` like VS Code; Ctrl+\ as a fallback that always works)
-for _, key in ipairs({ "<C-`>", "<C-\\>" }) do
-  map({ "n", "t" }, key, term.toggle, { desc = "Toggle terminal" })
-end
+-- <C-\> is not mapped in terminal mode: it would break the built-in <C-\><C-n>
+map({ "n", "t" }, "<C-`>", term.toggle, { desc = "Toggle terminal" })
+map("n", "<C-\\>", term.toggle, { desc = "Toggle terminal" })
 map("n", "<leader>tt", term.toggle, { desc = "Toggle terminal" })
 -- Double Esc leaves terminal mode (single Esc is kept for the program inside)
 map("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
