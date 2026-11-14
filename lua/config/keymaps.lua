@@ -61,6 +61,8 @@ map("v", ">", ">gv")
 map({ "n", "t" }, "<C-`>", term.toggle, { desc = "Toggle terminal" })
 map("n", "<C-\\>", term.toggle, { desc = "Toggle terminal" })
 map("n", "<leader>tt", term.toggle, { desc = "Toggle terminal" })
+-- Back to code from anywhere (terminal, Claude, explorer), panels stay open
+map({ "n", "t" }, "<C-1>", term.focus_editor, { desc = "Focus code" })
 -- Double Esc leaves terminal mode (single Esc is kept for the program inside)
 map("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
 

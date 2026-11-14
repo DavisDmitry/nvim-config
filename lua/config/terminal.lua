@@ -21,6 +21,16 @@ local function editor_win()
   return cur
 end
 
+-- Jump to code: the previous window if it holds code, else the first code window
+function M.focus_editor()
+  local prev = vim.fn.win_getid(vim.fn.winnr("#"))
+  local target = (prev ~= 0 and is_editor_win(prev)) and prev or editor_win()
+  if is_editor_win(target) then
+    vim.api.nvim_set_current_win(target)
+    vim.cmd.stopinsert()
+  end
+end
+
 function M.is_open()
   return M.win ~= nil and vim.api.nvim_win_is_valid(M.win)
 end
@@ -73,8 +83,9 @@ function M.open()
   vim.cmd.startinsert()
 end
 
+-- Closed → open and focus; open but elsewhere → focus; focused → hide
 function M.toggle()
-  if M.is_open() then
+  if M.is_open() and vim.api.nvim_get_current_win() == M.win then
     M.close()
   else
     M.open()
