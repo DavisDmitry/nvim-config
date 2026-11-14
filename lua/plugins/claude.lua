@@ -28,7 +28,9 @@ return {
       split_width_percentage = 0.30,
     },
     diff_opts = {
-      open_in_new_tab = false,
+      -- Each proposed change opens in its own tab page, leaving the editor
+      -- layout untouched; the tab closes on accept/reject
+      open_in_new_tab = true,
     },
   },
   keys = {
