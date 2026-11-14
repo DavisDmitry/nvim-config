@@ -30,10 +30,27 @@ return {
         },
       })
 
-      require("mason-lspconfig").setup({
-        ensure_installed = { "basedpyright", "ruff", "lua_ls" },
-        automatic_enable = true,
+      -- ruff LSP (linting) only in projects with ruff in their .venv,
+      -- running that local ruff
+      local project = require("config.project")
+      vim.lsp.config("ruff", {
+        cmd = function(dispatchers, config)
+          return vim.lsp.rpc.start({ project.bin(config.root_dir, "ruff"), "server" }, dispatchers, {
+            cwd = config.root_dir,
+          })
+        end,
+        root_dir = function(buf, on_dir)
+          local root = project.root(buf)
+          if project.uses(root, "ruff") then on_dir(root) end
+        end,
       })
+
+      require("mason-lspconfig").setup({
+        -- ruff is not installed globally: it comes from each project's .venv
+        ensure_installed = { "basedpyright", "lua_ls" },
+        automatic_enable = { exclude = { "ruff" } },
+      })
+      vim.lsp.enable("ruff") -- enabled here, not by Mason (see root_dir above)
 
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("lsp_attach", { clear = true }),
@@ -120,15 +137,42 @@ return {
     keys = {
       { "<leader>cf", function() require("conform").format({ async = true }) end, mode = { "n", "v" }, desc = "Format" },
     },
-    opts = {
-      formatters_by_ft = {
-        python = { "ruff_fix", "ruff_organize_imports", "ruff_format" },
-        lua = { "stylua", lsp_format = "fallback" },
-      },
-      format_on_save = function(buf)
-        if vim.b[buf].autosaving then return end -- autosave writes as-is
-        return { timeout_ms = 1000, lsp_format = "fallback" }
-      end,
-    },
+    opts = function()
+      local project = require("config.project")
+      -- Python tools always run from the project's .venv
+      local function venv_command(tool)
+        return { command = function(_, ctx) return project.bin(project.root(ctx.buf), tool) end }
+      end
+      return {
+        formatters_by_ft = {
+          -- Only the tools installed in this project's .venv; none → no formatting.
+          -- Code style only: no `ruff check --fix` (lint fixes stay manual, <leader>ca).
+          python = function(buf)
+            local root = project.root(buf)
+            local list = {}
+            if project.uses(root, "isort") then table.insert(list, "isort") end
+            if project.uses(root, "black") then
+              table.insert(list, "black")
+            elseif project.uses(root, "ruff") then
+              table.insert(list, "ruff_format")
+            end
+            return list
+          end,
+          lua = function(buf)
+            return project.has_stylua(buf) and { "stylua" } or {}
+          end,
+        },
+        formatters = {
+          ruff_format = venv_command("ruff"),
+          black = venv_command("black"),
+          isort = venv_command("isort"),
+        },
+        format_on_save = function(buf)
+          if vim.b[buf].autosaving then return end -- autosave writes as-is
+          -- No LSP fallback on save: a project without a formatter stays untouched
+          return { timeout_ms = 1000, lsp_format = "never" }
+        end,
+      }
+    end,
   },
 }
