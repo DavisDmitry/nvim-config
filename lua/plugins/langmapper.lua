@@ -1,8 +1,6 @@
--- Commands work on the Russian layout too.
--- Only letters are mapped (same keys in macOS "Russian" and "Russian – PC";
--- punctuation and ё differ between the two, so they are left out).
-local en = [[QWERTYUIOP{}ASDFGHJKL:"ZXCVBNM<>qwertyuiop[]asdfghjkl;'zxcvbnm,.]]
-local ru = [[ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮйцукенгшщзхъфывапролджэячсмитьбю]]
+-- Commands work on the Russian layout too (letters only, see config/layout.lua).
+local layout = require("config.layout")
+local en, ru = layout.en, layout.ru
 
 -- 'langmap' covers built-in commands (hjkl, dd, ciw, ...)
 local function escape(str)

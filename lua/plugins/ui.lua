@@ -132,9 +132,23 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
+    config = function(_, opts)
+      require("which-key").setup(opts)
+      -- Russian layout: once which-key's popup is waiting for the next key,
+      -- it looks keys up in its own tree, where the Russian twins are hidden
+      -- (see `filter`); an unknown key would make it give up and run the keys
+      -- as plain Vim commands (<leader>ф → append). Translate the key first,
+      -- so <leader>ф behaves exactly like <leader>a. This patches a
+      -- which-key internal; recheck it after which-key updates.
+      local State = require("which-key.state")
+      local check = State.check
+      State.check = function(state, key)
+        return check(state, key and require("config.layout").to_en(key))
+      end
+    end,
     opts = {
       preset = "modern",
-      -- Hide the Russian-layout twins from langmapper (they still work)
+      -- Hide the Russian-layout twins from langmapper from the popup
       filter = function(mapping)
         return not (mapping.lhs or ""):find("[\208\209]") -- Cyrillic UTF-8 lead bytes
       end,
