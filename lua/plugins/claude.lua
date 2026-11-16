@@ -21,7 +21,7 @@ end
 return {
   "coder/claudecode.nvim",
   dependencies = { "folke/snacks.nvim" },
-  cmd = { "ClaudeCode", "ClaudeCodeFocus", "ClaudeCodeSend", "ClaudeCodeAdd", "ClaudeCodeTreeAdd" },
+  cmd = { "ClaudeCode", "ClaudeCodeOpen", "ClaudeCodeFocus", "ClaudeCodeSend", "ClaudeCodeAdd", "ClaudeCodeTreeAdd" },
   opts = {
     terminal = {
       split_side = "right",
@@ -34,8 +34,7 @@ return {
     },
   },
   keys = {
-    { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
-    { "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+    -- <leader>af / <leader>at (focus / show-hide) are in config/keymaps.lua
     { "<C-,>", "<cmd>ClaudeCodeFocus<cr>", mode = { "n", "t" }, desc = "Focus/toggle Claude" },
     { "<leader>ar", claude("--resume", "/resume"), desc = "Resume session (pick chat)" },
     { "<leader>aC", claude("--continue"), desc = "Continue last session" },

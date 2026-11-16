@@ -135,7 +135,7 @@ return {
     event = "BufWritePre",
     cmd = "ConformInfo",
     keys = {
-      { "<leader>cf", function() require("conform").format({ async = true }) end, mode = { "n", "v" }, desc = "Format" },
+      { "<leader>c=", function() require("conform").format({ async = true }) end, mode = { "n", "v" }, desc = "Format" },
     },
     opts = function()
       local project = require("config.project")

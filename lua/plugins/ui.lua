@@ -142,6 +142,7 @@ return {
         { "<leader>a", group = "Claude Code" },
         { "<leader>b", group = "Tabs" },
         { "<leader>c", group = "Code" },
+        { "<leader>e", group = "Files" },
         { "<leader>f", group = "Find" },
         { "<leader>g", group = "Git" },
         { "<leader>h", group = "Git hunks" },

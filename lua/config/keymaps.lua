@@ -60,9 +60,19 @@ map("v", ">", ">gv")
 -- <C-\> is not mapped in terminal mode: it would break the built-in <C-\><C-n>
 map({ "n", "t" }, "<C-`>", term.toggle, { desc = "Toggle terminal" })
 map("n", "<C-\\>", term.toggle, { desc = "Toggle terminal" })
-map("n", "<leader>tt", term.toggle, { desc = "Toggle terminal" })
 -- Back to code from anywhere (terminal, Claude, explorer), panels stay open
 map({ "n", "t" }, "<C-1>", term.focus_editor, { desc = "Focus code" })
+
+-- Zones: <leader>{zone}f = focus, <leader>{zone}t = show/hide (see zones.lua)
+-- e = files, c = code, a = Claude, t = terminal
+local zones = require("config.zones")
+map("n", "<leader>ef", zones.files_focus, { desc = "Focus files" })
+map("n", "<leader>et", zones.files_toggle, { desc = "Show/hide files" })
+map("n", "<leader>cf", zones.code_focus, { desc = "Focus code" })
+map("n", "<leader>af", zones.claude_focus, { desc = "Focus Claude" })
+map("n", "<leader>at", zones.claude_toggle, { desc = "Show/hide Claude" })
+map("n", "<leader>tf", zones.terminal_focus, { desc = "Focus terminal" })
+map("n", "<leader>tt", zones.terminal_toggle, { desc = "Show/hide terminal" })
 -- Double Esc leaves terminal mode (single Esc is kept for the program inside)
 map("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
 

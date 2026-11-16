@@ -23,13 +23,24 @@ Requirements: Neovim 0.12+, git, a Nerd Font, and the `claude` CLI in `PATH` for
 
 `<leader>` is Space.
 
+The workspace has four zones, and each one uses the same keys:
+`<leader>{zone}f` focuses the zone (opening it if hidden),
+`<leader>{zone}t` shows or hides it without moving the cursor.
+
+| Zone | Focus | Show / hide |
+|---|---|---|
+| Files (`e`) | `<leader>ef` | `<leader>et` |
+| Code (`c`) | `<leader>cf` | — |
+| Claude (`a`) | `<leader>af` | `<leader>at` |
+| Terminal (`t`) | `<leader>tf` | `<leader>tt` |
+
+Shortcuts that also work from inside the terminal and Claude:
+`<C-b>` (files), `<C-1>` (code), `<C-,>` (Claude), `` <C-`> `` (terminal).
+
 | Key | Action |
 |---|---|
 | `<leader>L` / `:IDE` | Open the full layout |
-| `<leader>e` | Focus file tree / jump back |
-| `<C-b>` | Toggle file tree |
-| `` <C-`> `` / `<C-\>` | Toggle terminal |
-| `<leader>ac` | Toggle Claude Code |
 | `<leader>ar` | Resume a Claude chat |
+| `<leader>c=` | Format file |
 | `<C-p>` / `<leader>fg` | Find files / search text |
 | `<leader>q` / `:Q` | Quit everything |

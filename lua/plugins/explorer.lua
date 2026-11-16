@@ -8,17 +8,7 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   keys = {
-    {
-      "<leader>e",
-      function()
-        if vim.bo.filetype == "neo-tree" then
-          vim.cmd("wincmd p") -- already in the tree: jump back to the code
-        else
-          vim.cmd("Neotree focus") -- opens it if hidden
-        end
-      end,
-      desc = "Focus explorer / back",
-    },
+    -- <leader>ef / <leader>et (focus / show-hide) are in config/keymaps.lua
     { "<C-b>", "<cmd>Neotree toggle<cr>", desc = "Toggle explorer" },
     { "<leader>E", "<cmd>Neotree reveal<cr>", desc = "Reveal file in explorer" },
     { "<leader>be", "<cmd>Neotree buffers<cr>", desc = "Open editors" },
