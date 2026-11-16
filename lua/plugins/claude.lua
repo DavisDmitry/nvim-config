@@ -26,6 +26,13 @@ return {
     terminal = {
       split_side = "right",
       split_width_percentage = 0.30,
+      snacks_win_opts = {
+        -- Drop Snacks' own double-Esc (200 ms, and the first Esc reaches
+        -- Claude and interrupts it), so the global <Esc><Esc> from
+        -- keymaps.lua applies here too: Esc is held until the second one
+        -- or 'timeoutlen', and a double Esc never reaches Claude.
+        keys = { term_normal = false },
+      },
     },
     diff_opts = {
       -- Each proposed change opens in its own tab page, leaving the editor
